@@ -12,11 +12,12 @@ public class ThermometerClient {
     public static void main(String[] args) {
         try {
             host = InetAddress.getLocalHost();
+            
         } catch (UnknownHostException e) {
             System.out.println("Host ID not found!");
             System.exit(1);
         }
-
+        System.out.println("Connection established...");
         run();
     }
 
@@ -28,21 +29,21 @@ public class ThermometerClient {
             String message = null;
             String response = null;
             do {
-                System.out.println("Please enter the temperature value you wish to convert from. \nFormatting example: 10 C, 90 F");
+                System.out.println("Enter temperature you wish to convert. \nExample: 10 C, 90 F");
                 System.out.print("Input:");
                 message = userEntry.readLine();
 
-                if (!message.equals("***CLOSE***")) {
+                if (!message.equals("CLOSE")) {
                     outPacket = new DatagramPacket(message.getBytes(),message.length(),host,PORT); //Step 2.
                     dgramSocket.send(outPacket); //Step 3.
                     buffer = new byte[256]; //Step 4.
                     inPacket = new DatagramPacket(buffer,buffer.length); //Step 5.
                     dgramSocket.receive(inPacket); //Step 6.
                     response = new String(inPacket.getData(), 0, inPacket.getLength()); //Step 7.
-                    System.out.println("\nSERVER> " + response);
+                    System.out.println("\nSERVER> " + response+"\n");
                     
                 }
-            } while (!message.equals("***CLOSE***"));
+            } while (!message.equals("CLOSE"));
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
