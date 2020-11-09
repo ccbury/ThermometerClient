@@ -29,7 +29,7 @@ public class ThermometerClient {
             String message = null;
             String response = null;
             do {
-                System.out.println("Enter temperature you wish to convert. \nExample: 10 C, 90 F");
+                System.out.println("Enter temperature you wish to convert. \nExample: 10 C, 10 Celsius, 10c, ect.");
                 System.out.print("Input:");
                 message = userEntry.readLine();
 
